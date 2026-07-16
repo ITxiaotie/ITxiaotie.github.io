@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>2010-2025 考研英语二真题讲解</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="back-home" href="../index.html">← 返回总目录</a>
+    <div class="brand"><span>英Ⅱ</span><div><h1>英语二真题</h1><p>2010-2025 · 768题号</p></div></div>
+    <nav class="view-switch"><button class="active" data-view="exam">逐题讲解</button><button data-view="method">方法论</button></nav>
+    <div id="filters">
+      <label>年份</label><select id="yearSelect"></select>
+      <label>板块</label><select id="sectionSelect"><option value="">全部板块</option><option>完形填空</option><option>阅读理解 Part A</option><option>阅读理解 Part B</option><option>翻译</option><option>写作 Part A</option><option>写作 Part B</option></select>
+      <label>题型</label><select id="typeSelect"><option value="">全部题型</option></select>
+      <label>搜索题干/选项/关键词</label><input id="searchInput" type="search" placeholder="如 attitude、because、主旨题">
+      <label class="check"><input id="wrongOnly" type="checkbox">只看待复习</label>
+      <div class="stats"><div><strong id="doneCount">0</strong><span>已学</span></div><div><strong id="rightRate">0%</strong><span>掌握率</span></div><div><strong id="wrongCount">0</strong><span>待复习</span></div></div>
+      <button id="resetYear" class="ghost">清空本年记录</button>
+    </div>
+  </aside>
+  <main>
+    <section class="hero">
+      <div><span class="eyebrow">颉斌斌老师式阅读路径</span><h2>先精准定位，再选项比错；看得少，但每一句都回答题干</h2><p>2010-2017 阅读 Text 1-4 对应老师原讲分集；其余年份与其他板块按第二个视频的方法论迁移讲解，并明确标注来源。</p></div>
+      <div class="hero-number"><strong>16</strong><span>年英语二真题</span></div>
+    </section>
+    <section id="examView" class="view active">
+      <section class="toolbar"><div><h3 id="examTitle"></h3><p id="examMeta"></p></div><div class="toolbar-links"><a href="https://www.bilibili.com/video/BV12k4y1A7h8/" target="_blank" rel="noreferrer">真题精讲视频 ↗</a><a href="https://www.bilibili.com/video/BV1MCdUYPE1Y/" target="_blank" rel="noreferrer">阅读方法论 ↗</a></div></section>
+      <section class="source-warning">题面来自公开真题资料并与答案解析交叉整理。早年资料存在少量 OCR 字符误差时，请点击题卡内“核对题面来源”；方法讲解仍以题干关系、原文证据和选项比错为核心。</section>
+      <section id="questionList" class="question-list"></section>
+    </section>
+    <section id="methodView" class="view">
+      <div class="method-intro"><span class="eyebrow">第二个视频的方法论总结</span><h2>四个底层问题，九个可执行动作</h2><p>不是背口诀，而是把“为什么会耗时、定位句凭什么成立、正确项为什么只是最佳项”讲清楚。</p></div>
+      <div id="methodList" class="method-list"></div>
+    </section>
+  </main>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

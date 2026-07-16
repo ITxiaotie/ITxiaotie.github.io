@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>2009—2025 计算机 408 真题逐题解析</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="back-catalog" href="../index.html">← 返回总目录</a>
+      <div class="brand">
+        <div class="brand-mark">408</div>
+        <div>
+          <h1>真题逐题解析</h1>
+          <p>2009—2025 · 799 题</p>
+        </div>
+      </div>
+      <label class="field-label" for="yearSelect">试卷年份</label>
+      <select id="yearSelect"></select>
+      <label class="field-label" for="subjectSelect">科目筛选</label>
+      <select id="subjectSelect">
+        <option value="">全部科目</option>
+        <option>数据结构</option>
+        <option>计算机组成原理</option>
+        <option>操作系统</option>
+        <option>计算机网络</option>
+      </select>
+      <label class="field-label" for="searchInput">搜索题目/考点</label>
+      <input id="searchInput" type="search" placeholder="如 Cache、页表、TCP">
+      <div class="toggle-line">
+        <input id="wrongOnly" type="checkbox">
+        <label for="wrongOnly">只看错题</label>
+      </div>
+      <div class="stats-panel">
+        <div><span id="doneCount">0</span><small>已答</small></div>
+        <div><span id="rightRate">0%</span><small>正确率</small></div>
+        <div><span id="wrongCount">0</span><small>错题</small></div>
+      </div>
+      <div class="pdf-links">
+        <a id="paperPdf" target="_blank" rel="noreferrer">打开原卷 PDF</a>
+        <a id="answerPdf" target="_blank" rel="noreferrer">打开解析 PDF</a>
+      </div>
+      <button id="resetYear" class="secondary-btn" type="button">清空本年记录</button>
+    </aside>
+    <main class="main">
+      <section class="welcome-card">
+        <div>
+          <span class="eyebrow">从零开始也能读懂</span>
+          <h2>17 年 408 真题，一题一题拆开讲</h2>
+          <p>每题按视频老师的顺序展开：先读题干、用生活场景理解，再翻译成计算机模型，随后画图或逐步计算、排除选项，最后总结定义与易错点。</p>
+          <p class="source-note">覆盖 220 道数据结构、222 道组成原理、204 道操作系统、153 道计算机网络题，归纳 340 个考点。<a href="https://www.bilibili.com/video/BV1icaxz8EXN/" target="_blank" rel="noreferrer">查看原视频目录</a></p>
+        </div>
+        <div class="coverage"><strong>799</strong><span>道完整真题</span></div>
+      </section>
+      <section class="topbar">
+        <div>
+          <h2 id="examTitle"></h2>
+          <p id="examMeta"></p>
+        </div>
+        <div class="view-tabs">
+          <button class="tab active" data-view="quiz" type="button">答题</button>
+          <button class="tab" data-view="analysis" type="button">考点</button>
+          <button class="tab" data-view="wrongs" type="button">错题</button>
+        </div>
+      </section>
+      <section id="quizView" class="view active">
+        <div id="questionList" class="question-list"></div>
+      </section>
+      <section id="analysisView" class="view">
+        <div id="paperAnalysis" class="analysis-grid"></div>
+      </section>
+      <section id="wrongsView" class="view">
+        <div id="wrongList" class="question-list"></div>
+      </section>
+    </main>
+  </div>
+  <script src="data/exams.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
