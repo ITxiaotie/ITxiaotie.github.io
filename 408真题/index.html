@@ -2,9 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://cdn.jsdelivr.net data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>2009—2025 计算机 408 真题逐题解析</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="../security.js"></script>
 </head>
 <body>
   <div class="app-shell">
@@ -39,8 +42,8 @@
         <div><span id="wrongCount">0</span><small>错题</small></div>
       </div>
       <div class="pdf-links">
-        <a id="paperPdf" target="_blank" rel="noreferrer">打开原卷 PDF</a>
-        <a id="answerPdf" target="_blank" rel="noreferrer">打开解析 PDF</a>
+        <a id="paperPdf" target="_blank" rel="noopener noreferrer">打开原卷 PDF</a>
+        <a id="answerPdf" target="_blank" rel="noopener noreferrer">打开解析 PDF</a>
       </div>
       <button id="resetYear" class="secondary-btn" type="button">清空本年记录</button>
     </aside>
@@ -50,7 +53,7 @@
           <span class="eyebrow">从零开始也能读懂</span>
           <h2>17 年 408 真题，一题一题拆开讲</h2>
           <p>每题按视频老师的顺序展开：先读题干、用生活场景理解，再翻译成计算机模型，随后画图或逐步计算、排除选项，最后总结定义与易错点。</p>
-          <p class="source-note">覆盖 220 道数据结构、222 道组成原理、204 道操作系统、153 道计算机网络题，归纳 340 个考点。<a href="https://www.bilibili.com/video/BV1icaxz8EXN/" target="_blank" rel="noreferrer">查看原视频目录</a></p>
+          <p class="source-note">覆盖 220 道数据结构、222 道组成原理、204 道操作系统、153 道计算机网络题，归纳 340 个考点。<a href="https://www.bilibili.com/video/BV1icaxz8EXN/" target="_blank" rel="noopener noreferrer">查看原视频目录</a></p>
         </div>
         <div class="coverage"><strong>799</strong><span>道完整真题</span></div>
       </section>

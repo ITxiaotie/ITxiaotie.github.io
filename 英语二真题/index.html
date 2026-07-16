@@ -2,9 +2,12 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://cdn.jsdelivr.net data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>2010-2025 考研英语二真题讲解</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="../security.js"></script>
 </head>
 <body>
   <aside class="sidebar">
@@ -27,7 +30,7 @@
       <div class="hero-number"><strong>16</strong><span>年英语二真题</span></div>
     </section>
     <section id="examView" class="view active">
-      <section class="toolbar"><div><h3 id="examTitle"></h3><p id="examMeta"></p></div><div class="toolbar-links"><a href="https://www.bilibili.com/video/BV12k4y1A7h8/" target="_blank" rel="noreferrer">真题精讲视频 ↗</a><a href="https://www.bilibili.com/video/BV1MCdUYPE1Y/" target="_blank" rel="noreferrer">阅读方法论 ↗</a></div></section>
+      <section class="toolbar"><div><h3 id="examTitle"></h3><p id="examMeta"></p></div><div class="toolbar-links"><a href="https://www.bilibili.com/video/BV12k4y1A7h8/" target="_blank" rel="noopener noreferrer">真题精讲视频 ↗</a><a href="https://www.bilibili.com/video/BV1MCdUYPE1Y/" target="_blank" rel="noopener noreferrer">阅读方法论 ↗</a></div></section>
       <section class="source-warning">题面来自公开真题资料并与答案解析交叉整理。早年资料存在少量 OCR 字符误差时，请点击题卡内“核对题面来源”；方法讲解仍以题干关系、原文证据和选项比错为核心。</section>
       <section id="questionList" class="question-list"></section>
     </section>

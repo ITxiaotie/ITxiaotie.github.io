@@ -17,7 +17,7 @@ function card(data,item){const rec=record(item.id);const article=document.create
   ${passageBlock(data,item)}
   <div class="question"><h4>${text(item.stem)}</h4>${item.body?`<div class="task-body">${text(item.body)}</div>`:""}</div>
   ${optionsBlock(item)}
-  <div class="actions"><button class="primary reveal">展开详细讲解</button><a href="${item.videoUrl}" target="_blank" rel="noreferrer">${esc(item.videoLabel)} ↗</a><a href="${item.sourceUrl}" target="_blank" rel="noreferrer">核对题面来源 ↗</a></div>
+  <div class="actions"><button class="primary reveal">展开详细讲解</button><a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer">${esc(item.videoLabel)} ↗</a><a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">核对题面来源 ↗</a></div>
   <section class="explanation ${rec?'open':''}">
     <div class="answer">参考答案：${text(answer)}</div>
     <div class="step"><span>01</span><div><h4>先判题型，不急着读全文</h4><p>${esc(item.method.entry)}</p></div></div>

@@ -19,7 +19,7 @@ function formulaBlock(item){
 function card(item){const rec=record(item.id);const article=document.createElement("article");article.className="question-card";article.innerHTML=`
   <header><div><b>${item.year} 第 ${item.number} 题</b><span>${item.kind}</span><span>${item.subject}</span><span>${item.topic}</span></div><em class="${rec?.wrong?'bad':rec?'good':''}">${rec?.wrong?'待复习':rec?'已掌握':''}</em></header>
   <div class="question">${mathText(item.question)}</div>
-  <div class="actions">${item.kind==='单项选择题'?'<button data-choice="A">A</button><button data-choice="B">B</button><button data-choice="C">C</button><button data-choice="D">D</button>':''}<button class="primary reveal">展开详细讲解</button><a href="${item.videoUrl}" target="_blank" rel="noreferrer">对应视频分集 ↗</a>${item.videoExtraUrl?`<a href="${item.videoExtraUrl}" target="_blank" rel="noreferrer">第10题严格证明补充 ↗</a>`:''}</div>
+  <div class="actions">${item.kind==='单项选择题'?'<button data-choice="A">A</button><button data-choice="B">B</button><button data-choice="C">C</button><button data-choice="D">D</button>':''}<button class="primary reveal">展开详细讲解</button><a href="${item.videoUrl}" target="_blank" rel="noopener noreferrer">对应视频分集 ↗</a>${item.videoExtraUrl?`<a href="${item.videoExtraUrl}" target="_blank" rel="noopener noreferrer">第10题严格证明补充 ↗</a>`:''}</div>
   <section class="explanation ${rec?'open':''}">
     <div class="answer">参考答案：${mathText(item.answer)}</div>
     <div class="step"><span>01</span><div><h4>先判断入口</h4><p>${escapeHtml(item.guide.concept)}</p></div></div>
@@ -27,7 +27,7 @@ function card(item){const rec=record(item.id);const article=document.createEleme
     <div class="step"><span>03</span><div><h4>本题关键演算式</h4>${formulaBlock(item)}</div></div>
     <div class="step warning"><span>04</span><div><h4>检查易错点</h4><p>${escapeHtml(item.guide.pitfall)}</p></div></div>
     <div class="step"><span>05</span><div><h4>做完再扩一层</h4><p>${escapeHtml(item.guide.extension)}</p></div></div>
-    <div class="review"><button class="master">标记已掌握</button><button class="needs-review">标记待复习</button><a href="${item.sourceUrl}" target="_blank" rel="noreferrer">核对题面来源 ↗</a></div>
+    <div class="review"><button class="master">标记已掌握</button><button class="needs-review">标记待复习</button><a href="${item.sourceUrl}" target="_blank" rel="noopener noreferrer">核对题面来源 ↗</a></div>
   </section>`;
   article.querySelector('.reveal').onclick=()=>{article.querySelector('.explanation').classList.add('open');typeset(article)};
   article.querySelectorAll('[data-choice]').forEach(btn=>btn.onclick=()=>{article.querySelectorAll('[data-choice]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')});
