@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>408 章节练习｜四科知识库</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../../security.js"></script>
+</head>
+<body data-page="practice">
+  <header class="site-header compact">
+    <nav class="top-nav" aria-label="主导航">
+      <a href="../../index.html">总目录</a>
+      <a href="../index.html">408 真题</a>
+      <a href="index.html">四科知识库</a>
+      <a class="active" href="practice.html">章节练习</a>
+    </nav>
+    <div class="hero">
+      <div>
+        <span class="eyebrow">按教材章节归档</span>
+        <h1>章节练习：学完立刻检验</h1>
+        <p>每个专题含一题依据教材同类考法改编的巩固题，并自动汇总本站 799 道真题中的对应题目。公开版不整库复制教材非统考原题。</p>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="practice-picker">
+      <label>科目<select id="practiceSubject"></select></label>
+      <label>知识专题<select id="practiceKnowledge"></select></label>
+    </section>
+    <section id="practiceIntro"></section>
+    <section id="generatedPractice"></section>
+    <section class="real-section">
+      <div class="section-heading"><div><span class="eyebrow">历年统考题</span><h2 id="realQuestionTitle">对应 408 真题</h2></div><span id="realQuestionCount" class="count-pill"></span></div>
+      <div id="realQuestionList" class="real-question-list"></div>
+    </section>
+  </main>
+  <footer>建议顺序：先独立作答 → 展开答案 → 回知识卡补漏 → 再做历年真题。</footer>
+  <script src="knowledge-data.js"></script>
+  <script src="../data/exams.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

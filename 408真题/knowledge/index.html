@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>408 四科知识库｜真题考点回溯</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../../security.js"></script>
+</head>
+<body data-page="knowledge">
+  <header class="site-header">
+    <nav class="top-nav" aria-label="主导航">
+      <a href="../../index.html">总目录</a>
+      <a href="../index.html">408 真题</a>
+      <a class="active" href="index.html">四科知识库</a>
+      <a href="practice.html">章节练习</a>
+    </nav>
+    <div class="hero">
+      <div>
+        <span class="eyebrow">2027 王道四科目录 × 2009—2025 统考真题</span>
+        <h1>做完题，沿着考点回到知识本身</h1>
+        <p>把四本复习指导压缩成可检索、可回溯的知识卡。每张卡从直观理解开始，再讲定义、公式、做题步骤和易错点，并连接相应历年真题与章节巩固题。</p>
+      </div>
+      <div class="hero-stat"><strong id="knowledgeCount">0</strong><span>个核心知识专题</span><small>覆盖 799 道真题</small></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="toolbar" aria-label="知识库筛选">
+      <div class="subject-tabs" id="subjectTabs"></div>
+      <label class="search-box"><span>搜索</span><input id="knowledgeSearch" type="search" placeholder="例如 Cache、信号量、最短路径、TCP"></label>
+    </section>
+    <section class="book-note">
+      <strong>使用方法：</strong>真题解析中的“知识点回溯”会直接跳到对应卡片；复习后点“进入章节练习”，可做该专题的历年 408 真题和教材同考法巩固题。
+    </section>
+    <div id="subjectSummary" class="subject-summary"></div>
+    <section id="knowledgeList" class="knowledge-list" aria-live="polite"></section>
+  </main>
+
+  <footer>知识内容按四本 2027 复习指导的章节组织，并依据本站 2009—2025 年 408 真题频次标注。</footer>
+  <script src="knowledge-data.js"></script>
+  <script src="../data/exams.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

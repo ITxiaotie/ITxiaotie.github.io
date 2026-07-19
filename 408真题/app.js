@@ -163,10 +163,18 @@ function statusText(item, rec) {
   return rec.wrong ? "待复习" : "已掌握";
 }
 
+function renderKnowledgeLinks(item) {
+  if (!window.findKnowledgeRefs) return "";
+  const refs = window.findKnowledgeRefs(item);
+  if (!refs.length) return "";
+  return `<div class="knowledge-backlinks"><strong>知识点回溯：</strong>${refs.map(ref => `<a href="knowledge/index.html#${encodeURIComponent(ref.id)}">${escapeHtml(ref.chapter)} · ${escapeHtml(ref.title)}</a>`).join("")}</div>`;
+}
+
 function renderQuestion(item) {
   const rec = getRecord(item.id);
   const card = document.createElement("article");
   card.className = "question-card";
+  card.dataset.questionId = item.id;
   const statusClass = rec ? (rec.wrong ? "wrong" : "right") : "";
   const questionMarkup = item.questionHtml || escapeHtml(item.question);
   card.innerHTML = `
@@ -191,7 +199,7 @@ function renderQuestion(item) {
         <div class="answer-line">${item.answer ? `正确答案：${item.answer}` : "主观题：按解析过程自评"}</div>
         <div class="info-box beginner-box"><h4>按视频老师的讲题方式 · ${escapeHtml(item.topic)}</h4><p class="method-note">依据视频中的讲题顺序重新组织，属于详细整理，不是逐字稿。</p>${beginnerGuide(item)}</div>
         <div class="info-box official-box"><h4>逐题推导与标准解析</h4><p>${escapeHtml(item.analysis)}</p></div>
-        <div class="info-box"><h4>复习定位</h4><p>${escapeHtml(item.knowledge)}</p></div>
+        <div class="info-box"><h4>复习定位</h4><p>${escapeHtml(item.knowledge)}</p>${renderKnowledgeLinks(item)}</div>
         ${renderWrongAnalysis(item, rec)}
       </div>
     </div>
@@ -354,14 +362,27 @@ function escapeHtml(value) {
 }
 
 function init() {
+  const params = new URLSearchParams(location.search);
+  const requestedQuestion = params.get("question");
+  const requestedSubject = params.get("subject");
+  const requestedSearch = params.get("search");
   window.EXAMS.forEach(exam => {
     const option = document.createElement("option");
     option.value = exam.year;
     option.textContent = `${exam.year} 年`;
     els.yearSelect.appendChild(option);
   });
-  state.year = window.EXAMS[0]?.year;
+  const requestedExam = requestedQuestion ? window.EXAMS.find(exam => exam.items.some(item => item.id === requestedQuestion)) : null;
+  state.year = requestedExam?.year || window.EXAMS[0]?.year;
   els.yearSelect.value = state.year;
+  if (requestedSubject && [...els.subjectSelect.options].some(option => option.value === requestedSubject)) {
+    state.subject = requestedSubject;
+    els.subjectSelect.value = requestedSubject;
+  }
+  if (requestedSearch) {
+    state.search = requestedSearch;
+    els.searchInput.value = requestedSearch;
+  }
 
   els.yearSelect.addEventListener("change", () => { state.year = Number(els.yearSelect.value); render(); });
   els.subjectSelect.addEventListener("change", () => { state.subject = els.subjectSelect.value; render(); });
@@ -382,6 +403,13 @@ function init() {
     });
   });
   render();
+  if (requestedQuestion) {
+    const target = [...document.querySelectorAll(".question-card")].find(card => card.dataset.questionId === requestedQuestion);
+    if (target) {
+      target.classList.add("linked-question");
+      target.scrollIntoView({ block: "start" });
+    }
+  }
 }
 
 init();

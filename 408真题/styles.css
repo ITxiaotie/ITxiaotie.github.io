@@ -267,6 +267,35 @@ select, input[type="search"] {
   .topbar { flex-direction: column; }
   .analysis-grid { grid-template-columns: 1fr; }
 }
+
+.knowledge-library-link {
+  color: #fff !important;
+  border-color: #b45309 !important;
+  background: #b45309 !important;
+  font-weight: 800;
+}
+
+.knowledge-backlinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.knowledge-backlinks a {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #7c2d12;
+  background: #ffedd5;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: .86rem;
+}
+
+.knowledge-backlinks a:hover { background: #fed7aa; }
+.question-card.linked-question { box-shadow: 0 0 0 4px rgba(180,83,9,.25), 0 16px 45px rgba(28,37,54,.12); }
 .back-catalog {
   display: inline-flex;
   margin-bottom: 16px;
