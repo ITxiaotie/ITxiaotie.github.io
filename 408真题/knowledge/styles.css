@@ -118,6 +118,7 @@ details summary { cursor: pointer; font-weight: 800; }
 .exam-setup, .exam-question-card, .answer-sheet, .result-hero, .review-card { border: 1px solid var(--line); border-radius: 20px; background: var(--card); box-shadow: 0 8px 30px rgba(35,47,62,.06); }
 .exam-setup { padding: 26px; }
 .exam-settings { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; }
+.trend-notice{margin:14px 0 0;padding:12px 14px;border:1px solid #b8d5eb;border-radius:10px;background:#eef7fd;color:#174f78;line-height:1.65}
 .exam-settings label { display: grid; gap: 6px; color: var(--muted); font-weight: 800; }
 .exam-settings select { width: 100%; padding: 11px 12px; color: var(--ink); border: 1px solid var(--line); border-radius: 10px; background: #fff; }
 .exam-rules { margin: 22px 0; padding: 16px 18px; border-radius: 14px; background: #eef5fa; }
@@ -138,6 +139,8 @@ details summary { cursor: pointer; font-weight: 800; }
 .exam-question-meta span, .review-meta span { padding: 4px 8px; border-radius: 999px; color: #5a6677; background: #ece8e0; font-size: .78rem; }
 .exam-question-meta span:first-child { color: #fff; background: #31516f; }
 .exam-question-card h2 { margin: 18px 0 22px; font-size: 1.2rem; line-height: 1.75; }
+.exam-question-card .question-paper-image{display:block;width:100%;margin:14px 0;border:1px solid #cbc4b7;border-radius:4px;background:#fffdf8}
+.paper-image-ready h2[hidden]{display:none}
 .exam-answer-options { display: grid; gap: 10px; }
 .exam-answer-option { display: grid; grid-template-columns: 34px 1fr; gap: 11px; align-items: start; width: 100%; padding: 13px 14px; text-align: left; color: var(--ink); border: 1px solid var(--line); border-radius: 12px; background: #fff; cursor: pointer; }
 .exam-answer-option > span { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: #40516a; background: #edf0f3; font-weight: 900; }
@@ -189,6 +192,7 @@ details summary { cursor: pointer; font-weight: 800; }
 .review-options span { font-weight: 900; }
 .review-analysis { margin-top: 13px; padding: 13px 15px; border-radius: 12px; background: #eef5fa; }
 .review-analysis p { white-space: pre-line; }
+.review-analysis .error-note{margin-top:12px;padding:10px 12px;border-left:3px solid #b45309;background:#fff8ed;color:#6b461e}
 .review-links { display: flex; flex-wrap: wrap; gap: 7px; }
 .review-links a { padding: 5px 9px; border-radius: 999px; color: #7c2d12; background: #ffedd5; text-decoration: none; font-size: .82rem; font-weight: 800; }
 footer { padding: 28px 16px; text-align: center; color: var(--muted); border-top: 1px solid var(--line); }

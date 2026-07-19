@@ -2,13 +2,14 @@
 <html lang="zh-CN" data-access="admin">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>408 在线模拟考试｜按知识点组卷</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="../../auth/access.css">
   <script src="../../security.js"></script>
+  <script src="../../question-paper.js"></script>
   <script src="../../auth/config.js"></script>
   <script src="../../auth/client.js"></script>
   <script src="../../auth/guard.js"></script>
@@ -31,11 +32,13 @@
     <section id="examSetup" class="exam-setup">
       <div class="section-heading"><div><span class="eyebrow">第一步</span><h2>设置试卷范围</h2></div><span id="poolCount" class="count-pill">0 题可用</span></div>
       <div class="exam-settings">
+        <label>组卷模式<select id="examMode"><option value="knowledge">按知识点专项练习</option><option value="trend">按近五年真题题型分布组卷</option><option value="ai">DeepSeek 按题型分布生成巩固题</option></select></label>
         <label>考试科目<select id="examSubject"></select></label>
         <label>对应知识点<select id="examKnowledge"></select></label>
         <label>抽取题数<select id="examQuestionCount"><option value="5">5 题</option><option value="10" selected>10 题</option><option value="15">15 题</option><option value="20">20 题</option><option value="30">30 题</option></select></label>
         <label>考试时间<select id="examMinutes"><option value="10">10 分钟</option><option value="20" selected>20 分钟</option><option value="30">30 分钟</option><option value="45">45 分钟</option><option value="60">60 分钟</option></select></label>
       </div>
+      <p id="trendNotice" class="trend-notice" hidden></p>
       <div class="exam-rules"><h3>考试说明</h3><ul><li>题目全部为单项选择题，每题等分，满分 100 分。</li><li>题目顺序和选项保持稳定，真题与章节巩固题混合出现。</li><li>计时结束自动交卷；未作答题目按错误计分。</li><li>交卷后显示逐题解析和对应知识点回溯。</li></ul></div>
       <button id="startExam" class="start-exam" type="button">开始模拟考试</button>
     </section>

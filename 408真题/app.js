@@ -203,6 +203,9 @@ function renderQuestion(item) {
     </div>
   `;
   wireQuestion(card, item);
+  if (window.QuestionPaperImage?.hasComplexLayout(questionMarkup)) {
+    window.QuestionPaperImage.makePaperImage(card.querySelector(".question-text"), `${item.year} 年第 ${item.number} 题真题题面`);
+  }
   return card;
 }
 

@@ -314,3 +314,7 @@ select, input[type="search"] {
   .evidence-row p { grid-column: 2; }
 }
 .free-limit-notice{display:block;margin:18px 26px 0;padding:12px 16px;border:1px solid #e7ca94;border-radius:12px;background:#fff7e8;color:#7c5a24;font-size:13px;font-weight:700;text-decoration:none}.free-limit-notice:hover{text-decoration:underline}
+
+/* Paper image fallback for complex original question layouts. */
+.question-paper-image{display:block;width:100%;max-width:1120px;margin:0 0 14px;border:1px solid #cbc4b7;border-radius:4px;background:#fffdf8;box-shadow:0 6px 18px rgba(43,35,20,.08)}
+.paper-image-ready .question-text[hidden]{display:none}
