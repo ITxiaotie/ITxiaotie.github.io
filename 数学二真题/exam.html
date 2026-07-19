@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self' https://cdn.jsdelivr.net; script-src-attr 'none'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>数学二知识点专项与十套模拟卷</title>
+  <link rel="stylesheet" href="exam.css">
+  <script src="../security.js"></script>
+  <script src="../auth/local-session.js"></script>
+  <script src="../auth/protect.js"></script>
+  <script src="../doubao-widget.js"></script>
+  <script src="mathjax-config.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha384-Wuix6BuhrWbjDBs24bXrjf4ZQ5aFeFWBuKkFekO2t8xFU0iNaLQfp2K6/1Nxveei" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+  <header><a href="index.html">← 返回数学二题库</a><span>KNOWLEDGE MOCK EXAM</span><h1>数学二在线模拟考试</h1><p>按知识点随机组卷，或选择十套固定模拟卷。选择题自动判分，填空与解答题根据参考答案自评。</p></header>
+  <main>
+    <section id="setup" class="panel setup">
+      <h2>设置试卷</h2>
+      <div class="settings">
+        <label>组卷模式<select id="mode"><option value="topic">知识点专项</option><option value="fixed">数学二十套模拟卷</option></select></label>
+        <label id="presetWrap" hidden>选择模拟卷<select id="preset"></select></label>
+        <label>科目<select id="subject"><option value="">高等数学与线性代数</option></select></label>
+        <label>知识点<select id="topic"><option value="">全部知识点</option></select></label>
+        <label>题目数量<select id="count"><option>10</option><option selected>15</option><option>20</option></select></label>
+        <label>考试时间<select id="minutes"><option>30</option><option selected>60</option><option>90</option><option>120</option></select></label>
+      </div>
+      <p id="notice" class="notice"></p><button id="start" class="primary" type="button">开始模拟考试</button>
+    </section>
+    <section id="screen" hidden>
+      <div class="status"><strong id="scope"></strong><span id="progress"></span><b id="timer">60:00</b><button id="submit" type="button">交卷</button></div>
+      <div class="exam-layout"><article id="question" class="panel question"></article><aside class="panel sheet"><h2>答题卡</h2><div id="sheet"></div></aside></div>
+      <nav class="exam-nav"><button id="previous" type="button">← 上一题</button><button id="next" type="button">下一题 →</button></nav>
+    </section>
+    <section id="result" class="panel result" hidden><div class="score"><strong id="score">0</strong><span>分</span></div><div><h2>考试完成</h2><p id="summary"></p><button id="retry" type="button">再做一次</button></div><div id="reviews" class="reviews"></div></section>
+  </main>
+  <script src="data.js"></script><script src="exam.js"></script>
+</body>
+</html>

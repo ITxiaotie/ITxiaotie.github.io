@@ -13,6 +13,7 @@
     "www.cnblogs.com",
     "csgraduates.com",
     "www.csgraduates.com",
+    "www.doubao.com",
   ]);
 
   function secureLink(link) {

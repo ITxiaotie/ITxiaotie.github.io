@@ -1,32 +1,31 @@
 <!doctype html>
-<html lang="zh-CN" data-access="admin">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>408 章节练习｜四科知识库</title>
+  <title>408 章节题库与专项练习</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../../auth/access.css">
   <script src="../../security.js"></script>
-  <script src="../../auth/config.js"></script>
-  <script src="../../auth/client.js"></script>
-  <script src="../../auth/guard.js"></script>
+  <script src="../../auth/local-session.js"></script>
+  <script src="../../auth/protect.js"></script>
+  <script src="../../doubao-widget.js"></script>
 </head>
 <body data-page="practice">
   <header class="site-header compact">
     <nav class="top-nav" aria-label="主导航">
       <a href="../../index.html">总目录</a>
       <a href="../index.html">408 真题</a>
-      <a href="index.html">四科知识库</a>
+      <a href="practice.html">章节题库</a>
       <a class="active" href="practice.html">章节练习</a>
       <a href="exam.html">在线模拟考试</a>
     </nav>
     <div class="hero">
       <div>
-        <span class="eyebrow">按教材章节归档</span>
+        <span class="eyebrow">按考试章节归档</span>
         <h1>章节练习：学完立刻检验</h1>
-        <p>每题都可以直接选择、提交判分并查看逐步解析；每个专题含一题教材同考法巩固题，并自动汇总本站 799 道真题中的对应选择题。</p>
+        <p>每题都可以直接选择、提交判分并查看逐步解析，并自动汇总本站 799 道真题中的对应选择题。</p>
       </div>
     </div>
   </header>
@@ -42,7 +41,7 @@
       <div id="realQuestionList" class="real-question-list"></div>
     </section>
   </main>
-  <footer>建议顺序：先独立作答 → 展开答案 → 回知识卡补漏 → 再做历年真题。</footer>
+  <footer>建议顺序：先独立作答 → 展开答案 → 记录错题 → 再做同知识点真题。</footer>
   <script src="knowledge-data.js"></script>
   <script src="../data/exams.js"></script>
   <script src="app.js"></script>

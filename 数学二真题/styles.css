@@ -2,6 +2,7 @@
 /* Formula transition notes */
 .formulas small{display:block;margin-top:3px;color:#6f685c;font-size:12px}
 .free-limit-notice{display:block;margin:18px 0;padding:12px 16px;border:1px solid #e7ca94;border-radius:12px;background:#fff7e8;color:#7c5a24;font-size:13px;font-weight:700;text-decoration:none}
+.exam-entry{display:block;margin:0 0 12px;padding:11px 12px;border:1px solid #d4b27c;border-radius:8px;color:#f1cf96;text-align:center;text-decoration:none;font-weight:800}
 
 /* Keep multi-line original stems as a stable paper image on narrow screens. */
 .question-paper-image{display:block;width:100%;margin:0 0 18px;border:1px solid #c9c0af;border-radius:4px;background:#fffdf8;box-shadow:0 6px 18px #54452e18}

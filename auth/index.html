@@ -2,35 +2,37 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'self'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'self'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>管理员登录｜小铁考研真题学习站</title>
+  <title>注册与登录｜小铁考研真题学习站</title>
   <link rel="stylesheet" href="styles.css">
   <script src="../security.js"></script>
-  <script src="config.js"></script>
-  <script src="client.js"></script>
+  <script src="local-session.js"></script>
 </head>
 <body>
   <main class="login-layout">
     <section class="login-intro">
-      <a class="brand" href="../index.html"><span>XT</span><b>小铁考研真题学习站</b></a>
-      <div>
-        <p class="eyebrow">LEARN · PRACTISE · REVIEW</p>
-        <h1>把每套真题，做成真正会用的知识。</h1>
-        <p>408 真题与数学二真题现已临时免费开放，无需注册或付费。此页仅用于超级管理员进入王道知识库与后台。</p>
-      </div>
-      <ul><li>普通用户无需登录</li><li>王道知识库仅限超级管理员</li><li>密码加盐哈希保存，不存储明文</li></ul>
+      <div class="brand"><span>XT</span><b>小铁考研真题学习站</b></div>
+      <div><p class="eyebrow">LEARN · PRACTISE · REVIEW</p><h1>先登录，再开始系统刷题。</h1><p>一个账号入口连接 408、数学二、章节题库、知识点专项考试和模拟卷。首次使用可直接注册，注册成功后自动登录。</p></div>
+      <ul><li>密码只保存加盐摘要</li><li>30 天登录状态</li><li>无收费与审核流程</li></ul>
     </section>
     <section class="login-card" aria-labelledby="formTitle">
-      <div class="form-heading"><span>ADMIN ONLY</span><h2 id="formTitle">超级管理员登录</h2></div>
+      <div class="tabs" role="tablist"><button id="loginTab" class="active" type="button">登录</button><button id="registerTab" type="button">注册</button></div>
+      <div class="form-heading"><span>STUDY ACCOUNT</span><h2 id="formTitle">登录学习账号</h2></div>
       <form id="loginForm">
-        <label>账号或手机号<input name="identifier" required maxlength="32" autocomplete="username" placeholder="输入超级管理员账号或手机号"></label>
-        <label>密码<input name="password" required minlength="8" maxlength="72" type="password" autocomplete="current-password" placeholder="至少 8 位"></label>
-        <button class="submit" type="submit">进入管理后台</button>
+        <label>账号或手机号<input name="identifier" required maxlength="32" autocomplete="username" placeholder="输入账号或手机号"></label>
+        <label>密码<input name="password" required minlength="8" maxlength="64" type="password" autocomplete="current-password" placeholder="至少 8 位"></label>
+        <button class="submit" type="submit">登录并进入题库</button>
+      </form>
+      <form id="registerForm" hidden>
+        <label>账号<input name="username" required minlength="2" maxlength="24" autocomplete="username" placeholder="2—24 位"></label>
+        <label>手机号<input name="phone" required inputmode="numeric" pattern="1[0-9]{10}" maxlength="11" autocomplete="tel" placeholder="11 位手机号"></label>
+        <label>密码<input name="password" required minlength="8" maxlength="64" type="password" autocomplete="new-password" placeholder="8—64 位"></label>
+        <button class="submit" type="submit">注册并登录</button>
       </form>
       <p id="message" class="message" aria-live="polite"></p>
-      <p class="privacy">普通访问者请直接返回学习站。超级管理员首次登录后请立即在后台更换初始密码。</p>
+      <p class="privacy">当前为浏览器本机账号：账号与学习记录保存在此浏览器，换设备不会自动同步。网站不会保存明文密码。</p>
     </section>
   </main>
   <script src="app.js"></script>

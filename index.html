@@ -8,6 +8,9 @@
   <title>考研真题学习站</title>
   <link rel="stylesheet" href="styles.css">
   <script src="security.js"></script>
+  <script src="auth/local-session.js"></script>
+  <script src="auth/protect.js"></script>
+  <script src="doubao-widget.js"></script>
 </head>
 <body><main>
   <header><span>LOCAL STUDY LIBRARY</span><h1>考研真题学习站</h1><p>把真题做成可以检索、作答、复盘的本地知识库。选择科目进入对应目录。</p></header>
@@ -15,5 +18,10 @@
     <a class="card c408" href="408真题/index.html"><div class="num">408</div><div><small>计算机统考</small><h2>408 真题逐题解析</h2><p>2009-2025 · 799题 · 数据结构、组成原理、操作系统、计算机网络</p><span>进入目录 →</span></div></a>
     <a class="card cmath" href="数学二真题/index.html"><div class="num">数Ⅱ</div><div><small>全国硕士研究生招生考试</small><h2>数学二真题逐题解析</h2><p>2016-2025 · 225题 · 高等数学、线性代数 · 对应视频讲解</p><span>进入目录 →</span></div></a>
   </section>
-  <footer>当前全站真题内容已临时免费开放。学习记录仅保存在当前浏览器中。<a class="admin-entry" href="auth/">管理员登录</a></footer>
+  <section class="study-tools" aria-label="专项学习入口">
+    <a href="408真题/knowledge/practice.html"><b>408 章节题库</b><span>按四科与知识点练习并复盘解析</span></a>
+    <a href="408真题/knowledge/exam.html"><b>408 在线模拟考试</b><span>知识点专项 + 10 套固定模拟卷</span></a>
+    <a href="数学二真题/exam.html"><b>数学二在线模拟考试</b><span>专题抽题 + 10 套固定模拟卷</span></a>
+  </section>
+  <footer>登录后可使用全部题库、专项练习和模拟考试。账号与学习记录保存在当前浏览器中。</footer>
 </main></body></html>

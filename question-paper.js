@@ -61,5 +61,26 @@
     });
   }
 
-  window.QuestionPaperImage = Object.freeze({ hasComplexLayout, makePaperImage });
+  function useScannedImage(source, imageUrl, label, options = {}) {
+    if (!source || !imageUrl) return;
+    const image = new Image();
+    image.className = "question-paper-image scanned-question-image";
+    image.alt = label || "真题原卷题面";
+    image.loading = "lazy";
+    image.onload = () => {
+      const aspectRatio = image.naturalHeight / Math.max(1, image.naturalWidth);
+      if (options.maxAspectRatio && aspectRatio > options.maxAspectRatio) {
+        image.remove();
+        makePaperImage(source, label);
+        return;
+      }
+      source.hidden = true;
+      source.parentElement?.classList.add("paper-image-ready");
+    };
+    image.onerror = () => { image.remove(); makePaperImage(source, label); };
+    image.src = imageUrl;
+    source.before(image);
+  }
+
+  window.QuestionPaperImage = Object.freeze({ hasComplexLayout, makePaperImage, useScannedImage });
 })();

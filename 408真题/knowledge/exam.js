@@ -12,7 +12,7 @@
   }, new Map());
   const els = {
     setup: document.querySelector("#examSetup"), screen: document.querySelector("#examScreen"), result: document.querySelector("#examResult"),
-    mode: document.querySelector("#examMode"), subject: document.querySelector("#examSubject"), knowledge: document.querySelector("#examKnowledge"), count: document.querySelector("#examQuestionCount"), minutes: document.querySelector("#examMinutes"), pool: document.querySelector("#poolCount"), trendNotice: document.querySelector("#trendNotice"), start: document.querySelector("#startExam"),
+    mode: document.querySelector("#examMode"), preset: document.querySelector("#paperPreset"), presetWrap: document.querySelector("#paperPresetWrap"), subject: document.querySelector("#examSubject"), knowledge: document.querySelector("#examKnowledge"), count: document.querySelector("#examQuestionCount"), minutes: document.querySelector("#examMinutes"), pool: document.querySelector("#poolCount"), trendNotice: document.querySelector("#trendNotice"), start: document.querySelector("#startExam"),
     scope: document.querySelector("#examScope"), progress: document.querySelector("#examProgress"), timer: document.querySelector("#examTimer"), submit: document.querySelector("#submitExam"), question: document.querySelector("#examQuestion"), sheet: document.querySelector("#answerSheet"), answered: document.querySelector("#answeredCount"), unanswered: document.querySelector("#unansweredCount"), previous: document.querySelector("#previousQuestion"), next: document.querySelector("#nextQuestion"),
     score: document.querySelector("#resultScore"), resultTitle: document.querySelector("#resultTitle"), resultSummary: document.querySelector("#resultSummary"), breakdown: document.querySelector("#resultBreakdown"), review: document.querySelector("#resultReview"), retry: document.querySelector("#retryExam")
   };
@@ -78,7 +78,7 @@
   function currentPool() {
     const subject = els.subject.value;
     const knowledge = els.knowledge.value;
-    if (els.mode.value === "ai") return [];
+    if (els.mode.value === "fixed") return realQuestions.map(normalizeReal);
     if (els.mode.value === "trend") return realQuestions.filter((question) => !subject || question.subject === subject).map(normalizeReal);
     return questionBank.filter((question) => {
       if (subject && question.subject !== subject) return false;
@@ -99,16 +99,20 @@
   function updatePool() {
     const pool = currentPool();
     const trendMode = els.mode.value === "trend";
-    const aiMode = els.mode.value === "ai";
-    els.knowledge.disabled = trendMode || aiMode;
-    els.trendNotice.hidden = !trendMode && !aiMode;
-    if (aiMode) {
-      els.trendNotice.textContent = "AI 组卷不会把服务密钥交给浏览器：系统会在受保护的后台调用 DeepSeek，并按近五年题型分布生成新的巩固题。首次使用前需由管理员在后台配置 DEEPSEEK_API_KEY。";
-      els.pool.textContent = "由 AI 生成";
+    const fixedMode = els.mode.value === "fixed";
+    els.knowledge.disabled = trendMode || fixedMode;
+    els.subject.disabled = fixedMode;
+    els.count.disabled = fixedMode;
+    els.presetWrap.hidden = !fixedMode;
+    if (fixedMode) {
+      els.trendNotice.hidden = false;
+      els.trendNotice.textContent = "每套卷按近五年 408 四科占比固定抽取 40 道选择题；同一套卷在本设备上保持稳定，便于重做和比较成绩。";
+      els.pool.textContent = "10 套固定卷";
       els.start.disabled = false;
-      els.start.textContent = "生成并开始 AI 模拟考试";
+      els.start.textContent = `开始 408 模拟卷 ${els.preset.value || 1}`;
       return;
     }
+    els.trendNotice.hidden = !trendMode;
     if (trendMode) {
       const total = latestTrendQuestions.length || 1;
       const distribution = [...latestDistribution.entries()].map(([subject, count]) => `${subject} ${Math.round(count / total * 100)}%`).join(" · ");
@@ -123,7 +127,7 @@
   }
 
   function scopeName() {
-    if (els.mode.value === "ai") return "DeepSeek 近年题型分布巩固模拟";
+    if (els.mode.value === "fixed") return `408 模拟卷 ${els.preset.value || 1}`;
     if (els.mode.value === "trend") return "近五年 408 真题题型分布模拟";
     if (els.knowledge.value) return window.KNOWLEDGE_BY_ID.get(els.knowledge.value)?.title || "知识点专项";
     return els.subject.value || "408 四科综合";
@@ -146,30 +150,36 @@
     return shuffle(paper).slice(0, amount);
   }
 
-  async function generateAiPaper(amount) {
-    const distribution = [...latestDistribution.entries()].map(([subject, count]) => `${subject}：${count} 题`);
-    const knowledge = els.knowledge.value ? (window.KNOWLEDGE_BY_ID.get(els.knowledge.value)?.title || "") : "";
-    const result = await window.AccessClient.request("/api/ai/mock", {
-      method: "POST",
-      body: JSON.stringify({ count: amount, subject: els.subject.value, knowledge, distribution })
-    });
-    return Array.isArray(result.questions) ? result.questions : [];
+  function seededShuffle(items, seed) {
+    const result = items.slice();
+    let value = seed >>> 0;
+    const random = () => { value = (value * 1664525 + 1013904223) >>> 0; return value / 4294967296; };
+    for (let index = result.length - 1; index > 0; index -= 1) {
+      const target = Math.floor(random() * (index + 1));
+      [result[index], result[target]] = [result[target], result[index]];
+    }
+    return result;
   }
 
-  async function startExam() {
+  function buildFixedPaper(pool, paperNumber) {
+    const amount = 40;
+    const seed = 408000 + Number(paperNumber) * 7919;
+    const total = [...latestDistribution.values()].reduce((sum, value) => sum + value, 0) || 1;
+    const allocations = [...latestDistribution.entries()].map(([subject, count]) => ({ subject, count: Math.floor(amount * count / total) }));
+    let assigned = allocations.reduce((sum, item) => sum + item.count, 0);
+    for (let index = 0; assigned < amount; index = (index + 1) % allocations.length) { allocations[index].count += 1; assigned += 1; }
+    const paper = allocations.flatMap((item, index) => seededShuffle(pool.filter((question) => question.subject === item.subject), seed + index * 97).slice(0, item.count));
+    return seededShuffle(paper, seed + 17);
+  }
+
+  function startExam() {
     const pool = currentPool();
-    const aiMode = els.mode.value === "ai";
-    if (!aiMode && !pool.length) return;
-    const amount = aiMode ? Number(els.count.value) : Math.min(Number(els.count.value), pool.length);
-    if (aiMode) {
-      els.start.disabled = true;
-      els.start.textContent = "正在生成试题…";
-      try { state.questions = await generateAiPaper(amount); }
-      catch (error) { alert(error instanceof Error ? error.message : "AI 组卷失败，请稍后重试。"); return; }
-      finally { updatePool(); }
-      if (!state.questions.length) { alert("本次没有获得可用 AI 题目，请稍后再试。"); return; }
-    } else state.questions = els.mode.value === "trend" ? buildTrendPaper(pool, amount) : shuffle(pool).slice(0, amount);
-    state.answers = Array(amount).fill(null);
+    if (!pool.length) return;
+    const fixedMode = els.mode.value === "fixed";
+    const amount = fixedMode ? Math.min(40, pool.length) : Math.min(Number(els.count.value), pool.length);
+    if (fixedMode) state.questions = buildFixedPaper(pool, els.preset.value);
+    else state.questions = els.mode.value === "trend" ? buildTrendPaper(pool, amount) : shuffle(pool).slice(0, amount);
+    state.answers = Array(state.questions.length).fill(null);
     state.current = 0;
     state.seconds = Number(els.minutes.value) * 60;
     state.deadline = Date.now() + state.seconds * 1000;
@@ -242,7 +252,7 @@
     const wrong = state.questions.length - correct;
     const answered = state.answers.filter((answer) => answer !== null).length;
     els.score.textContent = score;
-    els.resultTitle.textContent = score >= 85 ? "掌握得很扎实" : score >= 60 ? "基础合格，继续补漏" : "建议回到知识卡复习";
+    els.resultTitle.textContent = score >= 85 ? "掌握得很扎实" : score >= 60 ? "基础合格，继续补漏" : "建议回到章节题库复习";
     els.resultSummary.textContent = `${state.scopeLabel} · 共 ${state.questions.length} 题，答对 ${correct} 题，答错或未答 ${wrong} 题。`;
     els.breakdown.innerHTML = `<div><strong>${correct}</strong><span>答对</span></div><div><strong>${wrong}</strong><span>答错/未答</span></div><div><strong>${answered}</strong><span>已作答</span></div><div><strong>${formatDuration(Number(els.minutes.value) * 60 - state.seconds)}</strong><span>用时</span></div>`;
     els.review.innerHTML = state.questions.map((question, index) => renderReview(question, index)).join("");
@@ -264,7 +274,7 @@
     const errorNote = isCorrect ? "本题判断正确。复习时可快速核对题干中的关键限定词，确认不是偶然猜对。" : selected === null
       ? `本题未作答。先回到“${question.topic}”的定义与典型例题，再重新独立完成本题。`
       : `你选择了 ${escapeHtml(selectedOption?.text || selected || "") }；正确选项是 ${escapeHtml(correctOption?.text || question.answerLabel)}。请重点比较两者在题干条件、边界或概念定义上的差别。`;
-    return `<article class="review-card ${isCorrect ? "review-correct" : "review-wrong"}"><div class="review-meta"><strong>第 ${index + 1} 题 · ${isCorrect ? "正确" : selected === null ? "未作答" : "错误"}</strong><span>${escapeHtml(question.source)}</span></div><h3>${question.promptHtml || escapeHtml(question.prompt)}</h3><div class="review-options">${question.options.map((option, optionIndex) => { const classes = [option.key === question.correct ? "correct" : "", option.key === selected && selected !== question.correct ? "incorrect" : ""].filter(Boolean).join(" "); return `<div class="${classes}"><span>${String.fromCharCode(65 + optionIndex)}</span><b>${escapeHtml(option.text)}</b></div>`; }).join("")}</div><div class="review-analysis"><strong>标准答案：${escapeHtml(question.answerLabel)}</strong><p>${escapeHtml(question.analysis)}</p><p class="error-note"><b>本题复盘：</b>${errorNote}</p><div class="review-links">${refs.map((ref) => `<a href="index.html#${escapeHtml(ref.id)}">复习：${escapeHtml(ref.title)}</a>`).join("")}</div></div></article>`;
+    return `<article class="review-card ${isCorrect ? "review-correct" : "review-wrong"}"><div class="review-meta"><strong>第 ${index + 1} 题 · ${isCorrect ? "正确" : selected === null ? "未作答" : "错误"}</strong><span>${escapeHtml(question.source)}</span></div><h3>${question.promptHtml || escapeHtml(question.prompt)}</h3><div class="review-options">${question.options.map((option, optionIndex) => { const classes = [option.key === question.correct ? "correct" : "", option.key === selected && selected !== question.correct ? "incorrect" : ""].filter(Boolean).join(" "); return `<div class="${classes}"><span>${String.fromCharCode(65 + optionIndex)}</span><b>${escapeHtml(option.text)}</b></div>`; }).join("")}</div><div class="review-analysis"><strong>标准答案：${escapeHtml(question.answerLabel)}</strong><p>${escapeHtml(question.analysis)}</p><p class="error-note"><b>本题复盘：</b>${errorNote}</p><div class="review-links">${refs.map((ref) => `<a href="practice.html?knowledge=${encodeURIComponent(ref.id)}">复习：${escapeHtml(ref.title)}</a>`).join("")}</div></div></article>`;
   }
 
   function saveResult(result) {
@@ -276,11 +286,13 @@
   }
 
   els.subject.innerHTML = `<option value="">四科综合</option>${subjects.map((subject) => `<option>${escapeHtml(subject)}</option>`).join("")}`;
+  els.preset.innerHTML = Array.from({ length: 10 }, (_, index) => `<option value="${index + 1}">408 模拟卷 ${index + 1}</option>`).join("");
   const requested = new URLSearchParams(location.search).get("knowledge");
   if (window.KNOWLEDGE_BY_ID.has(requested)) els.subject.value = window.KNOWLEDGE_BY_ID.get(requested).subject;
   fillKnowledge();
   if (window.KNOWLEDGE_BY_ID.has(requested)) { els.knowledge.value = requested; updatePool(); }
   els.mode.addEventListener("change", updatePool);
+  els.preset.addEventListener("change", updatePool);
   els.subject.addEventListener("change", fillKnowledge);
   els.knowledge.addEventListener("change", updatePool);
   els.count.addEventListener("change", updatePool);

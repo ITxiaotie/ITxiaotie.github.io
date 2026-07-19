@@ -1,20 +1,18 @@
 # Security policy
 
-This repository contains the public GitHub Pages front end. Account, session,
-role operations are handled by a separately deployed Sites
-service backed by D1. The backend source and secrets are intentionally excluded
-from this public repository.
+This repository contains a public static GitHub Pages front end. Registration,
+login and study history are intentionally device-local browser features. There
+is no administrator or payment backend.
 
 ## Access model
 
-- Passwords are stored as PBKDF2-SHA256 hashes with per-user random salts.
-- Session tokens are random values; only their SHA-256 hashes are stored.
-- Login failures are rate limited by IP and account identifier.
-- The browser sends bearer tokens only to the configured account-service origin.
-- The bootstrap administrator password is a deployment secret and must be
-  changed immediately after the first successful login.
+- Passwords are stored in localStorage only as PBKDF2-SHA256 hashes with
+  per-user random salts; plaintext passwords are never stored.
+- Sessions expire after 30 days and remain in the current browser profile.
+- No account data is sent to a project account service.
+- Clearing browser storage removes local accounts, sessions and study history.
 
-408 真题与数学二真题当前临时免费开放，无需账号或付款。王道知识库、章节练习和模拟考试由超级管理员入口保护。静态托管并不是 DRM：若未来需要严格保护题库文件，必须将其迁移到带鉴权的对象存储。
+页面导航在登录成功后才显示题库。GitHub Pages 的静态登录门禁不是 DRM，也不能阻止知道资源直链的人读取公开文件；若未来需要真正的跨设备账号、服务端权限和严格题库保护，必须迁移到带服务端鉴权的托管与对象存储。
 
 ## Reporting a vulnerability
 

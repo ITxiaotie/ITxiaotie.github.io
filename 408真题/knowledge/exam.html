@@ -1,30 +1,29 @@
 <!doctype html>
-<html lang="zh-CN" data-access="admin">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
   <meta name="referrer" content="no-referrer">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>408 在线模拟考试｜按知识点组卷</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../../auth/access.css">
   <script src="../../security.js"></script>
   <script src="../../question-paper.js"></script>
-  <script src="../../auth/config.js"></script>
-  <script src="../../auth/client.js"></script>
-  <script src="../../auth/guard.js"></script>
+  <script src="../../auth/local-session.js"></script>
+  <script src="../../auth/protect.js"></script>
+  <script src="../../doubao-widget.js"></script>
 </head>
 <body data-page="exam">
   <header class="site-header compact exam-header">
     <nav class="top-nav" aria-label="主导航">
       <a href="../../index.html">总目录</a>
       <a href="../index.html">408 真题</a>
-      <a href="index.html">四科知识库</a>
+      <a href="practice.html">章节题库</a>
       <a href="practice.html">章节练习</a>
       <a class="active" href="exam.html">在线模拟考试</a>
     </nav>
     <div class="hero">
-      <div><span class="eyebrow">知识点专项组卷</span><h1>408 在线模拟考试</h1><p>选择科目或具体知识点，将教材同考法巩固题与历年 408 选择题混合组卷。计时作答、答题卡导航，交卷后统一评分并逐题复盘。</p></div>
+      <div><span class="eyebrow">知识点专项组卷</span><h1>408 在线模拟考试</h1><p>选择科目、知识点或十套固定模拟卷。支持计时作答、答题卡导航，交卷后统一评分并逐题复盘。</p></div>
     </div>
   </header>
 
@@ -32,7 +31,8 @@
     <section id="examSetup" class="exam-setup">
       <div class="section-heading"><div><span class="eyebrow">第一步</span><h2>设置试卷范围</h2></div><span id="poolCount" class="count-pill">0 题可用</span></div>
       <div class="exam-settings">
-        <label>组卷模式<select id="examMode"><option value="knowledge">按知识点专项练习</option><option value="trend">按近五年真题题型分布组卷</option><option value="ai">DeepSeek 按题型分布生成巩固题</option></select></label>
+        <label>组卷模式<select id="examMode"><option value="knowledge">按知识点专项练习</option><option value="trend">按近五年真题题型分布组卷</option><option value="fixed">408 十套模拟卷</option></select></label>
+        <label id="paperPresetWrap" hidden>选择模拟卷<select id="paperPreset"></select></label>
         <label>考试科目<select id="examSubject"></select></label>
         <label>对应知识点<select id="examKnowledge"></select></label>
         <label>抽取题数<select id="examQuestionCount"><option value="5">5 题</option><option value="10" selected>10 题</option><option value="15">15 题</option><option value="20">20 题</option><option value="30">30 题</option></select></label>
@@ -53,7 +53,7 @@
     </section>
 
     <section id="examResult" class="exam-result" hidden>
-      <div class="result-hero"><div class="score-ring"><strong id="resultScore">0</strong><span>分</span></div><div><span class="eyebrow">考试完成</span><h2 id="resultTitle">本次得分</h2><p id="resultSummary"></p><div class="result-actions"><button id="retryExam" type="button">按相同范围再考一次</button><a href="index.html">返回知识库</a></div></div></div>
+      <div class="result-hero"><div class="score-ring"><strong id="resultScore">0</strong><span>分</span></div><div><span class="eyebrow">考试完成</span><h2 id="resultTitle">本次得分</h2><p id="resultSummary"></p><div class="result-actions"><button id="retryExam" type="button">按相同范围再考一次</button><a href="practice.html">返回章节题库</a></div></div></div>
       <div id="resultBreakdown" class="result-breakdown"></div>
       <div class="section-heading review-heading"><div><span class="eyebrow">逐题复盘</span><h2>答案与解析</h2></div></div>
       <div id="resultReview" class="result-review"></div>

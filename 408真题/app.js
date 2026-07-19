@@ -204,7 +204,7 @@ function renderQuestion(item) {
   `;
   wireQuestion(card, item);
   if (window.QuestionPaperImage?.hasComplexLayout(questionMarkup)) {
-    window.QuestionPaperImage.makePaperImage(card.querySelector(".question-text"), `${item.year} 年第 ${item.number} 题真题题面`);
+    window.QuestionPaperImage.useScannedImage(card.querySelector(".question-text"), `assets/question-images/${item.id}.webp`, `${item.year} 年第 ${item.number} 题真题原卷题面`, { maxAspectRatio: item.number === 47 ? 3.2 : 2.2 });
   }
   return card;
 }
