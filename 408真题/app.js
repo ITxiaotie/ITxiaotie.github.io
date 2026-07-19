@@ -185,7 +185,7 @@ function renderQuestion(item) {
       <div class="actions">
         ${item.options.length ? '<button class="primary-btn submit-answer" type="button">提交并看解析</button>' : '<button class="primary-btn mark-mastered" type="button">自评掌握</button><button class="plain-btn mark-wrong" type="button">标记待复习</button>'}
         <button class="plain-btn reveal-analysis" type="button">查看解析</button>
-        ${item.videoPage ? `<a class="video-link" href="https://www.bilibili.com/video/BV1icaxz8EXN/?p=${item.videoPage}" target="_blank" rel="noopener noreferrer">打开本题对应视频分集 ↗</a>` : ""}
+        ${item.videoPage ? `<a class="video-link" href="https://www.bilibili.com/video/BV1icaxz8EXN/?p=${item.videoPage}&t=${item.videoTime ?? 0}" target="_blank" rel="noopener noreferrer">打开本题对应视频分集 ↗</a>` : ""}
       </div>
       <div class="reveal ${rec ? "open" : ""}">
         <div class="answer-line">${item.answer ? `正确答案：${item.answer}` : "主观题：按解析过程自评"}</div>
