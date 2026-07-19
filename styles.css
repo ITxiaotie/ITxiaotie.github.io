@@ -2,3 +2,4 @@
 .cenglish{background:linear-gradient(130deg,#173e34,#80613b)}
 .cknowledge{background:linear-gradient(130deg,#5b3218,#b45309)}
 .card.locked{filter:saturate(.55)}.card.locked .num:after{content:"锁";position:absolute;display:grid;place-items:center;width:28px;height:28px;margin:76px 0 0 76px;border-radius:50%;background:#fff;color:#5b3218;font:700 12px system-ui}.card .num{position:relative}
+.admin-entry{margin-left:14px;color:#536d5a;text-decoration:none;font-weight:700}.admin-entry:hover{text-decoration:underline}

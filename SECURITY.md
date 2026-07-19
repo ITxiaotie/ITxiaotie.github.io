@@ -1,7 +1,7 @@
 # Security policy
 
 This repository contains the public GitHub Pages front end. Account, session,
-role, and payment-review operations are handled by a separately deployed Sites
+role operations are handled by a separately deployed Sites
 service backed by D1. The backend source and secrets are intentionally excluded
 from this public repository.
 
@@ -11,16 +11,10 @@ from this public repository.
 - Session tokens are random values; only their SHA-256 hashes are stored.
 - Login failures are rate limited by IP and account identifier.
 - The browser sends bearer tokens only to the configured account-service origin.
-- Payment is verified manually. The QR image does not provide an automatic
-  payment callback, so a pending request must be compared with the WeChat bill.
 - The bootstrap administrator password is a deployment secret and must be
   changed immediately after the first successful login.
 
-The learning content is hosted as static files. The interface enforces free and
-paid navigation, but static hosting is not DRM: a determined visitor who already
-knows a raw asset URL may still request that file. Strong content-level secrecy
-would require moving protected question data and PDFs to authenticated object
-storage.
+408 真题与数学二真题当前临时免费开放，无需账号或付款。王道知识库、章节练习和模拟考试由超级管理员入口保护。静态托管并不是 DRM：若未来需要严格保护题库文件，必须将其迁移到带鉴权的对象存储。
 
 ## Reporting a vulnerability
 

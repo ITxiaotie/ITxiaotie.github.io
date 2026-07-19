@@ -14,10 +14,10 @@
   <script src="../auth/guard.js"></script>
 </head>
 <body>
-  <aside><a class="logo" href="../index.html"><span>XT</span><b>管理后台</b></a><nav><button class="active" data-panel="users" type="button">用户与审核</button><button data-panel="security" type="button">账号安全</button><a href="../index.html">返回学习站</a></nav><p>只有超级管理员可以访问。本页不会显示、保存或导出任何用户密码。</p></aside>
+  <aside><a class="logo" href="../index.html"><span>XT</span><b>管理后台</b></a><nav><a href="../408真题/knowledge/index.html">王道知识库</a><button class="active" data-panel="users" type="button">用户与审核</button><button data-panel="security" type="button">账号安全</button><a href="../index.html">返回学习站</a></nav><p>只有超级管理员可以访问。本页不会显示、保存或导出任何用户密码。</p></aside>
   <main>
     <section id="usersPanel" class="panel active">
-      <header><div><span>ACCESS CONTROL</span><h1>用户与付费审核</h1><p>在微信账单中核对金额、账号或手机号后，再批准解锁。</p></div><button id="refresh" type="button">刷新数据</button></header>
+      <header><div><span>ACCESS CONTROL</span><h1>用户与权限管理</h1><p>当前全站普通真题内容免费开放；此后台保留账号状态与超级管理员安全管理。</p></div><button id="refresh" type="button">刷新数据</button></header>
       <section class="stats"><article><span>注册用户</span><strong id="totalStat">0</strong></article><article><span>付费用户</span><strong id="paidStat">0</strong></article><article><span>待审核</span><strong id="pendingStat">0</strong></article><article><span>已停用</span><strong id="disabledStat">0</strong></article></section>
       <section class="filters"><input id="search" type="search" placeholder="搜索账号或手机号"><select id="status"><option value="">全部用户</option><option value="pending">待审核</option><option value="free">普通用户</option><option value="paid">付费用户</option><option value="disabled">已停用</option></select></section>
       <p id="adminMessage" class="message" aria-live="polite"></p>

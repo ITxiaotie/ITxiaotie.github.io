@@ -165,10 +165,7 @@ function statusText(item, rec) {
 }
 
 function renderKnowledgeLinks(item) {
-  if (!window.findKnowledgeRefs) return "";
-  const refs = window.findKnowledgeRefs(item);
-  if (!refs.length) return "";
-  return `<div class="knowledge-backlinks"><strong>知识点回溯：</strong>${refs.map(ref => `<a href="knowledge/index.html#${encodeURIComponent(ref.id)}">${escapeHtml(ref.chapter)} · ${escapeHtml(ref.title)}</a>`).join("")}</div>`;
+  return "";
 }
 
 function renderQuestion(item) {
@@ -363,14 +360,7 @@ function escapeHtml(value) {
 }
 
 function init() {
-  availableExams = window.AUTH_CONTEXT?.isPaid ? window.EXAMS : window.EXAMS.slice(0, 3);
-  if (!window.AUTH_CONTEXT?.isPaid) {
-    const upgrade = document.createElement("a");
-    upgrade.className = "free-limit-notice";
-    upgrade.href = "../pay/";
-    upgrade.textContent = `普通用户可学习前 ${availableExams.length} 套真题 · 支付 9.9 元解锁全部年份、知识库与模拟考试 →`;
-    document.querySelector(".main").prepend(upgrade);
-  }
+  availableExams = window.EXAMS;
   const params = new URLSearchParams(location.search);
   const requestedQuestion = params.get("question");
   const requestedSubject = params.get("subject");
@@ -421,4 +411,4 @@ function init() {
   }
 }
 
-window.authReady.then(init);
+init();
