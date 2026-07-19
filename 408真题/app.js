@@ -23,6 +23,7 @@ const els = {
   paperAnalysis: document.querySelector("#paperAnalysis"),
   wrongList: document.querySelector("#wrongList"),
 };
+let availableExams = window.EXAMS;
 
 const SUBJECT_GUIDES = {
   "数据结构": [
@@ -126,7 +127,7 @@ function removeRecord(id) {
 }
 
 function currentExam() {
-  return window.EXAMS.find(exam => exam.year === Number(state.year));
+  return availableExams.find(exam => exam.year === Number(state.year));
 }
 
 function allRecordsForExam(exam) {
@@ -362,18 +363,26 @@ function escapeHtml(value) {
 }
 
 function init() {
+  availableExams = window.AUTH_CONTEXT?.isPaid ? window.EXAMS : window.EXAMS.slice(0, 3);
+  if (!window.AUTH_CONTEXT?.isPaid) {
+    const upgrade = document.createElement("a");
+    upgrade.className = "free-limit-notice";
+    upgrade.href = "../pay/";
+    upgrade.textContent = `普通用户可学习前 ${availableExams.length} 套真题 · 支付 9.9 元解锁全部年份、知识库与模拟考试 →`;
+    document.querySelector(".main").prepend(upgrade);
+  }
   const params = new URLSearchParams(location.search);
   const requestedQuestion = params.get("question");
   const requestedSubject = params.get("subject");
   const requestedSearch = params.get("search");
-  window.EXAMS.forEach(exam => {
+  availableExams.forEach(exam => {
     const option = document.createElement("option");
     option.value = exam.year;
     option.textContent = `${exam.year} 年`;
     els.yearSelect.appendChild(option);
   });
-  const requestedExam = requestedQuestion ? window.EXAMS.find(exam => exam.items.some(item => item.id === requestedQuestion)) : null;
-  state.year = requestedExam?.year || window.EXAMS[0]?.year;
+  const requestedExam = requestedQuestion ? availableExams.find(exam => exam.items.some(item => item.id === requestedQuestion)) : null;
+  state.year = requestedExam?.year || availableExams[0]?.year;
   els.yearSelect.value = state.year;
   if (requestedSubject && [...els.subjectSelect.options].some(option => option.value === requestedSubject)) {
     state.subject = requestedSubject;
@@ -412,4 +421,4 @@ function init() {
   }
 }
 
-init();
+window.authReady.then(init);

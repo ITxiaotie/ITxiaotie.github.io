@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'self'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src https://xiaotie-study-access.black-shrew-5161.chatgpt.site; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>登录｜小铁考研真题学习站</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../security.js"></script>
+  <script src="config.js"></script>
+  <script src="client.js"></script>
+</head>
+<body>
+  <main class="login-layout">
+    <section class="login-intro">
+      <a class="brand" href="../index.html"><span>XT</span><b>小铁考研真题学习站</b></a>
+      <div>
+        <p class="eyebrow">LEARN · PRACTISE · REVIEW</p>
+        <h1>把每套真题，做成真正会用的知识。</h1>
+        <p>注册后可免费学习 408 真题和数学二真题各前三套；一次支付 9.9 元，解锁英语二、四科知识库、章节练习、模拟考试和全部年份。</p>
+      </div>
+      <ul><li>账号服务与学习站分离部署</li><li>密码加盐哈希保存，不存储明文</li><li>付款后由管理员人工核对开通</li></ul>
+    </section>
+    <section class="login-card" aria-labelledby="formTitle">
+      <div class="tabs" role="tablist"><button class="active" type="button" data-tab="login">登录</button><button type="button" data-tab="register">注册</button></div>
+      <div class="form-heading"><span>欢迎回来</span><h2 id="formTitle">登录学习站</h2></div>
+      <form id="loginForm">
+        <label>账号或手机号<input name="identifier" required maxlength="32" autocomplete="username" placeholder="输入账号或 11 位手机号"></label>
+        <label>密码<input name="password" required minlength="8" maxlength="72" type="password" autocomplete="current-password" placeholder="至少 8 位"></label>
+        <button class="submit" type="submit">登录</button>
+      </form>
+      <form id="registerForm" hidden>
+        <label>账号<input name="username" required minlength="2" maxlength="24" autocomplete="username" placeholder="2—24 位中文、字母或数字"></label>
+        <label>手机号<input name="phone" required inputmode="numeric" pattern="1[3-9][0-9]{9}" maxlength="11" autocomplete="tel" placeholder="用于登录和付款核对"></label>
+        <label>密码<input name="password" required minlength="8" maxlength="72" type="password" autocomplete="new-password" placeholder="8—72 位"></label>
+        <label>确认密码<input name="confirmPassword" required minlength="8" maxlength="72" type="password" autocomplete="new-password" placeholder="再次输入密码"></label>
+        <button class="submit" type="submit">注册并进入</button>
+      </form>
+      <p id="message" class="message" aria-live="polite"></p>
+      <p class="privacy">注册即表示你同意本站为登录、权限和付款核对保存账号、手机号及密码哈希。请勿使用与其他网站相同的密码。</p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

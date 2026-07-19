@@ -313,3 +313,4 @@ select, input[type="search"] {
   .evidence-row { grid-template-columns: 30px 1fr; }
   .evidence-row p { grid-column: 2; }
 }
+.free-limit-notice{display:block;margin:18px 26px 0;padding:12px 16px;border:1px solid #e7ca94;border-radius:12px;background:#fff7e8;color:#7c5a24;font-size:13px;font-weight:700;text-decoration:none}.free-limit-notice:hover{text-decoration:underline}

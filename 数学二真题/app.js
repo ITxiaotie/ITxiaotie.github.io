@@ -1,10 +1,11 @@
 const state={year:2016,kind:"",subject:"",search:"",wrongOnly:false};
+let availableExams=window.MATH2_EXAMS;
 const el=id=>document.getElementById(id);
 const els={year:el("yearSelect"),kind:el("kindSelect"),subject:el("subjectSelect"),search:el("searchInput"),wrongOnly:el("wrongOnly"),list:el("questionList"),title:el("examTitle"),meta:el("examMeta"),video:el("yearVideo"),done:el("doneCount"),rate:el("rightRate"),wrong:el("wrongCount"),reset:el("resetYear")};
 const key=id=>`math2-study:${id}`;
 function record(id){try{return JSON.parse(localStorage.getItem(key(id))||"null")}catch{return null}}
 function save(id,value){localStorage.setItem(key(id),JSON.stringify(value))}
-function exam(){return window.MATH2_EXAMS.find(x=>x.year===Number(state.year))}
+function exam(){return availableExams.find(x=>x.year===Number(state.year))}
 function escapeHtml(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
 function mathText(value){return escapeHtml(value).replaceAll("\n","<br>")}
 function visibleItems(data){const needle=state.search.trim().toLowerCase();return data.items.filter(item=>{if(state.kind&&item.kind!==state.kind)return false;if(state.subject&&item.subject!==state.subject)return false;if(state.wrongOnly&&!record(item.id)?.wrong)return false;if(!needle)return true;return `${item.number} ${item.topic} ${item.subject} ${item.question}`.toLowerCase().includes(needle)})}
@@ -37,5 +38,5 @@ function card(item){const rec=record(item.id);const article=document.createEleme
 }
 function typeset(node=document){if(window.MathJax?.typesetPromise)window.MathJax.typesetPromise([node]).catch(()=>{})}
 function render(){const data=exam();els.title.textContent=`${data.year} 年考研数学二真题`;els.meta.textContent=`${data.items.length} 题 · 高等数学与线性代数 · 视频式五步讲解`;els.video.href=`https://www.bilibili.com/video/BV1rVYdzoEUZ/?p=${data.videoPage}`;renderStats(data);const items=visibleItems(data);els.list.innerHTML='';if(!items.length){els.list.innerHTML='<div class="empty">当前筛选条件下没有题目。</div>';return}const frag=document.createDocumentFragment();items.forEach(item=>frag.appendChild(card(item)));els.list.appendChild(frag);typeset(els.list)}
-function init(){window.MATH2_EXAMS.forEach(data=>{const option=document.createElement('option');option.value=data.year;option.textContent=`${data.year} 年`;els.year.appendChild(option)});els.year.onchange=()=>{state.year=Number(els.year.value);render()};els.kind.onchange=()=>{state.kind=els.kind.value;render()};els.subject.onchange=()=>{state.subject=els.subject.value;render()};els.search.oninput=()=>{state.search=els.search.value;render()};els.wrongOnly.onchange=()=>{state.wrongOnly=els.wrongOnly.checked;render()};els.reset.onclick=()=>{const data=exam();if(confirm(`清空 ${data.year} 年学习记录？`)){data.items.forEach(item=>localStorage.removeItem(key(item.id)));render()}};render()}
-init();
+function init(){availableExams=window.AUTH_CONTEXT?.isPaid?window.MATH2_EXAMS:window.MATH2_EXAMS.slice(0,3);state.year=availableExams[0]?.year;if(!window.AUTH_CONTEXT?.isPaid){const upgrade=document.createElement('a');upgrade.className='free-limit-notice';upgrade.href='../pay/';upgrade.textContent=`普通用户可学习前 ${availableExams.length} 套真题 · 支付 9.9 元解锁全部年份和功能 →`;document.querySelector('main').prepend(upgrade)}availableExams.forEach(data=>{const option=document.createElement('option');option.value=data.year;option.textContent=`${data.year} 年`;els.year.appendChild(option)});els.year.value=state.year;els.year.onchange=()=>{state.year=Number(els.year.value);render()};els.kind.onchange=()=>{state.kind=els.kind.value;render()};els.subject.onchange=()=>{state.subject=els.subject.value;render()};els.search.oninput=()=>{state.search=els.search.value;render()};els.wrongOnly.onchange=()=>{state.wrongOnly=els.wrongOnly.checked;render()};els.reset.onclick=()=>{const data=exam();if(confirm(`清空 ${data.year} 年学习记录？`)){data.items.forEach(item=>localStorage.removeItem(key(item.id)));render()}};render()}
+window.authReady.then(init);
