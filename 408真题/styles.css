@@ -318,3 +318,4 @@ select, input[type="search"] {
 /* Paper image fallback for complex original question layouts. */
 .question-paper-image{display:block;width:100%;max-width:1120px;margin:0 0 14px;border:1px solid #cbc4b7;border-radius:4px;background:#fffdf8;box-shadow:0 6px 18px rgba(43,35,20,.08)}
 .paper-image-ready .question-text[hidden]{display:none}
+.question-diagram-image{display:block;max-width:100%;height:auto;margin:14px auto 18px;padding:8px;border:1px solid #d5dbe0;border-radius:6px;background:#fff;box-shadow:0 5px 16px rgba(43,73,94,.07)}

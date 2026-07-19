@@ -1,10 +1,8 @@
 (() => {
   "use strict";
 
-  // Complex original questions (tables, diagrams, multiline stems, and code) can
-  // lose their reading order when responsive styles compress them.  This helper
-  // turns the already-rendered stem into a self-contained SVG paper image.  The
-  // source stays in the DOM as an accessibility and loading fallback.
+  // Keep the stem as selectable text. Only the embedded diagram becomes an
+  // image, so its layout stays stable without pulling in PDF watermarks.
   function xml(value) {
     return String(value ?? "")
       .replaceAll("&", "&amp;")
@@ -61,26 +59,27 @@
     });
   }
 
-  function useScannedImage(source, imageUrl, label, options = {}) {
-    if (!source || !imageUrl) return;
+  function visualOnlyImage(svg, label, index) {
+    if (!svg || svg.dataset.visualImageReady === "1") return;
+    svg.dataset.visualImageReady = "1";
+    const clone = svg.cloneNode(true);
+    clone.querySelectorAll("script").forEach((node) => node.remove());
+    clone.removeAttribute("id");
+    clone.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+    const blob = new Blob([new XMLSerializer().serializeToString(clone)], { type: "image/svg+xml;charset=utf-8" });
     const image = new Image();
-    image.className = "question-paper-image scanned-question-image";
-    image.alt = label || "真题原卷题面";
+    image.className = "question-diagram-image";
+    image.alt = `${label || "真题"}图 ${index + 1}`;
     image.loading = "lazy";
-    image.onload = () => {
-      const aspectRatio = image.naturalHeight / Math.max(1, image.naturalWidth);
-      if (options.maxAspectRatio && aspectRatio > options.maxAspectRatio) {
-        image.remove();
-        makePaperImage(source, label);
-        return;
-      }
-      source.hidden = true;
-      source.parentElement?.classList.add("paper-image-ready");
-    };
-    image.onerror = () => { image.remove(); makePaperImage(source, label); };
-    image.src = imageUrl;
-    source.before(image);
+    image.onload = () => { URL.revokeObjectURL(image.src); svg.replaceWith(image); };
+    image.onerror = () => { URL.revokeObjectURL(image.src); svg.dataset.visualImageReady = ""; };
+    image.src = URL.createObjectURL(blob);
   }
 
-  window.QuestionPaperImage = Object.freeze({ hasComplexLayout, makePaperImage, useScannedImage });
+  function makeVisualOnlyImages(source, label) {
+    if (!source) return;
+    source.querySelectorAll("svg").forEach((svg, index) => visualOnlyImage(svg, label, index));
+  }
+
+  window.QuestionPaperImage = Object.freeze({ hasComplexLayout, makePaperImage, makeVisualOnlyImages });
 })();

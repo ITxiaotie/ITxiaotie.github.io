@@ -213,9 +213,7 @@
     els.progress.textContent = `第 ${state.current + 1} / ${state.questions.length} 题`;
     els.question.innerHTML = `<div class="exam-question-meta"><span>${escapeHtml(question.source)}</span><span>${escapeHtml(question.subject)}</span><span>${escapeHtml(question.topic)}</span></div><h2>${state.current + 1}. ${question.promptHtml || escapeHtml(question.prompt)}</h2><div class="exam-answer-options">${question.options.map((option, index) => `<button class="exam-answer-option ${selected === option.key ? "selected" : ""}" type="button" data-value="${escapeHtml(option.key)}"><span>${String.fromCharCode(65 + index)}</span><b>${escapeHtml(option.text)}</b></button>`).join("")}</div><p class="keyboard-hint">键盘可按 1—4 选择，← → 切换题目</p>`;
     const stem = els.question.querySelector("h2");
-    if (window.QuestionPaperImage?.hasComplexLayout(question.promptHtml || question.prompt)) {
-      window.QuestionPaperImage.makePaperImage(stem, `${question.source} ${question.topic} 真题题面`);
-    }
+    window.QuestionPaperImage?.makeVisualOnlyImages(stem, `${question.source} ${question.topic}`);
     els.previous.disabled = state.current === 0;
     els.next.textContent = state.current === state.questions.length - 1 ? "检查答题卡 →" : "下一题 →";
     renderSheet();
