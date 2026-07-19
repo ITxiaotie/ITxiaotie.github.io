@@ -274,6 +274,7 @@ select, input[type="search"] {
   background: #b45309 !important;
   font-weight: 800;
 }
+.exam-library-link { border-color: #31516f !important; background: #31516f !important; }
 
 .knowledge-backlinks {
   display: flex;

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="no-referrer">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>408 在线模拟考试｜按知识点组卷</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../../security.js"></script>
+</head>
+<body data-page="exam">
+  <header class="site-header compact exam-header">
+    <nav class="top-nav" aria-label="主导航">
+      <a href="../../index.html">总目录</a>
+      <a href="../index.html">408 真题</a>
+      <a href="index.html">四科知识库</a>
+      <a href="practice.html">章节练习</a>
+      <a class="active" href="exam.html">在线模拟考试</a>
+    </nav>
+    <div class="hero">
+      <div><span class="eyebrow">知识点专项组卷</span><h1>408 在线模拟考试</h1><p>选择科目或具体知识点，将教材同考法巩固题与历年 408 选择题混合组卷。计时作答、答题卡导航，交卷后统一评分并逐题复盘。</p></div>
+    </div>
+  </header>
+
+  <main class="exam-main">
+    <section id="examSetup" class="exam-setup">
+      <div class="section-heading"><div><span class="eyebrow">第一步</span><h2>设置试卷范围</h2></div><span id="poolCount" class="count-pill">0 题可用</span></div>
+      <div class="exam-settings">
+        <label>考试科目<select id="examSubject"></select></label>
+        <label>对应知识点<select id="examKnowledge"></select></label>
+        <label>抽取题数<select id="examQuestionCount"><option value="5">5 题</option><option value="10" selected>10 题</option><option value="15">15 题</option><option value="20">20 题</option><option value="30">30 题</option></select></label>
+        <label>考试时间<select id="examMinutes"><option value="10">10 分钟</option><option value="20" selected>20 分钟</option><option value="30">30 分钟</option><option value="45">45 分钟</option><option value="60">60 分钟</option></select></label>
+      </div>
+      <div class="exam-rules"><h3>考试说明</h3><ul><li>题目全部为单项选择题，每题等分，满分 100 分。</li><li>题目顺序和选项保持稳定，真题与章节巩固题混合出现。</li><li>计时结束自动交卷；未作答题目按错误计分。</li><li>交卷后显示逐题解析和对应知识点回溯。</li></ul></div>
+      <button id="startExam" class="start-exam" type="button">开始模拟考试</button>
+    </section>
+
+    <section id="examScreen" class="exam-screen" hidden>
+      <div class="exam-statusbar"><div><span id="examScope">专项模拟</span><strong id="examProgress">第 1 / 10 题</strong></div><div class="timer" id="examTimer" aria-live="polite">20:00</div><button id="submitExam" class="submit-exam" type="button">交卷</button></div>
+      <div class="exam-layout">
+        <article id="examQuestion" class="exam-question-card"></article>
+        <aside class="answer-sheet"><h2>答题卡</h2><div class="sheet-legend"><span>已答</span><span>当前</span><span>未答</span></div><div id="answerSheet" class="answer-grid"></div><div class="sheet-count"><span>已答 <strong id="answeredCount">0</strong></span><span>未答 <strong id="unansweredCount">0</strong></span></div></aside>
+      </div>
+      <div class="exam-nav"><button id="previousQuestion" type="button">← 上一题</button><button id="nextQuestion" type="button">下一题 →</button></div>
+    </section>
+
+    <section id="examResult" class="exam-result" hidden>
+      <div class="result-hero"><div class="score-ring"><strong id="resultScore">0</strong><span>分</span></div><div><span class="eyebrow">考试完成</span><h2 id="resultTitle">本次得分</h2><p id="resultSummary"></p><div class="result-actions"><button id="retryExam" type="button">按相同范围再考一次</button><a href="index.html">返回知识库</a></div></div></div>
+      <div id="resultBreakdown" class="result-breakdown"></div>
+      <div class="section-heading review-heading"><div><span class="eyebrow">逐题复盘</span><h2>答案与解析</h2></div></div>
+      <div id="resultReview" class="result-review"></div>
+    </section>
+  </main>
+  <footer>模拟考试结果只保存在当前浏览器，不会上传个人答题数据。</footer>
+  <script src="knowledge-data.js"></script>
+  <script src="../data/exams.js"></script>
+  <script src="exam.js"></script>
+</body>
+</html>

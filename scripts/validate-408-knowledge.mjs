@@ -24,6 +24,8 @@ for (const card of cards) {
   for (const field of ["subject", "chapter", "title", "summary"]) if (!card[field]) errors.push(`${card.id} 缺少 ${field}`);
   for (const field of ["core", "formulas", "method", "traps", "keywords"]) if (!Array.isArray(card[field]) || !card[field].length) errors.push(`${card.id} 的 ${field} 为空`);
   if (!card.practice?.prompt || !card.practice?.answer || !card.practice?.explanation) errors.push(`${card.id} 缺少完整章节练习`);
+  if (!Array.isArray(card.practice?.options) || card.practice.options.length !== 4) errors.push(`${card.id} 章节练习不是 4 个选项`);
+  if (!Number.isInteger(card.practice?.correct) || card.practice.correct < 0 || card.practice.correct > 3) errors.push(`${card.id} 章节练习正确选项无效`);
 }
 
 const refCounts = new Map(cards.map((card) => [card.id, 0]));
@@ -37,7 +39,7 @@ for (const question of questions) {
   }
 }
 
-for (const file of [path.join(subjectDir, "index.html"), path.join(subjectDir, "knowledge", "index.html"), path.join(subjectDir, "knowledge", "practice.html")]) {
+for (const file of [path.join(subjectDir, "index.html"), path.join(subjectDir, "knowledge", "index.html"), path.join(subjectDir, "knowledge", "practice.html"), path.join(subjectDir, "knowledge", "exam.html")]) {
   const full = path.join(root, file);
   const html = fs.readFileSync(full, "utf8");
   const attr = /(?:src|href)="([^"#?]+)(?:[?#][^"]*)?"/g;
