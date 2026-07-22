@@ -159,6 +159,7 @@
       submit.hidden = true;
       const retry = article.querySelector(".retry-answer");
       if (retry) retry.hidden = false;
+      if (article._wrongEntry) window.WrongBook?.capture(article._wrongEntry, isCorrect);
       return;
     }
     const retry = event.target.closest(".retry-answer");
@@ -205,6 +206,7 @@
       history.replaceState(null, "", `?knowledge=${encodeURIComponent(item.id)}`);
       intro.innerHTML = `<div class="practice-intro"><span class="eyebrow">${escapeHtml(item.subject)} · ${escapeHtml(item.chapter)}</span><h2>${escapeHtml(item.title)}</h2><div class="intro-actions"><a class="exam-entry" href="exam.html?knowledge=${encodeURIComponent(item.id)}">用本知识点模拟考试 →</a></div></div>`;
       generated.innerHTML = `<article class="generated-card interactive-question" data-graded="false"><span class="source-badge">专项巩固题</span><h2>选择答案后提交</h2><div class="practice-prompt">${escapeHtml(item.practice.prompt)}</div>${renderAnswerOptions(item.practice.options, String(item.practice.correct))}<div class="answer-actions"><button class="check-answer" type="button" disabled>提交答案</button><button class="retry-answer" type="button" hidden>重新作答</button></div><div class="answer-feedback" hidden><strong></strong></div><div class="answer-panel" hidden><strong>标准答案：${escapeHtml(item.practice.answer)}</strong><p>${escapeHtml(item.practice.explanation)}</p></div></article>`;
+      generated.firstElementChild._wrongEntry = { id: `408-practice-${item.id}`, module: "408 章节练习", subject: item.subject, topic: item.title, prompt: item.practice.prompt, options: item.practice.options.map((option, index) => ({ key: optionKey(option, index), text: optionText(option) })), answer: String(item.practice.correct), analysis: item.practice.explanation, href: location.pathname + location.search };
       title.textContent = `${item.title} · 对应 408 真题`;
       count.textContent = `${questions.length} 题`;
       realList.innerHTML = questions.length ? questions.map((question) => {
@@ -212,6 +214,7 @@
         const options = question.options || [];
         return `<article class="real-question interactive-question" id="${escapeHtml(question.id)}" data-graded="false"><div class="real-meta"><span>${question.year} 第 ${escapeHtml(question.number)} 题</span><span>${escapeHtml(question.kind)}</span><span>${escapeHtml(question.topic)}</span></div><div class="real-prompt">${prompt}</div>${renderAnswerOptions(options, question.answer)}<div class="answer-actions"><button class="check-answer" type="button" disabled>提交答案</button><button class="retry-answer" type="button" hidden>重新作答</button></div><div class="answer-feedback" hidden><strong></strong></div><div class="answer-panel" hidden><strong>标准答案：${escapeHtml(question.answer)}</strong><p>${escapeHtml(question.analysis)}</p><a class="back-knowledge" href="../index.html?question=${encodeURIComponent(question.id)}">回原真题页复盘 →</a></div></article>`;
       }).join("") : '<div class="empty">该专题暂未匹配到历年真题，可先完成上方巩固题。</div>';
+      realList.querySelectorAll("article").forEach((article, index) => { const question = questions[index]; article._wrongEntry = { id: `408-${question.id}`, module: "408 真题", subject: question.subject, topic: question.topic, prompt: optionText(question.question || question.questionHtml), options: question.options.map((option, optionIndex) => ({ key: optionKey(option, optionIndex), text: optionText(option) })), answer: question.answer, analysis: question.analysis, href: `../index.html?question=${encodeURIComponent(question.id)}` }; });
     }
 
     subjectSelect.addEventListener("change", () => { selectedSubject = subjectSelect.value; selectedId = ""; fillKnowledgeSelect(); render(); });
