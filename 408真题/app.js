@@ -275,6 +275,7 @@ function wireQuestion(card, item) {
       }
       const correct = item.answer ? selected === item.answer : false;
       setRecord(item.id, { selected, correct, wrong: !correct, revealed: true, updatedAt: Date.now() });
+      window.WrongBook?.capture({ id: `408-${item.id}`, module: "408 真题", subject: item.subject, topic: item.topic, prompt: optionPlainText(item.question || item.questionHtml), options: item.options.map(opt => ({ key: optionKey(opt), text: optionPlainText(opt) })), answer: item.answer, analysis: item.analysis, href: `${location.pathname}?year=${item.year}&question=${encodeURIComponent(item.id)}` }, correct);
       render();
     });
   }
@@ -282,6 +283,7 @@ function wireQuestion(card, item) {
   if (mastered) {
     mastered.addEventListener("click", () => {
       setRecord(item.id, { selected: "mastered", correct: true, wrong: false, revealed: true, updatedAt: Date.now() });
+      window.WrongBook?.capture({ id: `408-${item.id}` }, true);
       render();
     });
   }
@@ -289,6 +291,7 @@ function wireQuestion(card, item) {
   if (wrong) {
     wrong.addEventListener("click", () => {
       setRecord(item.id, { selected: "review", correct: false, wrong: true, revealed: true, updatedAt: Date.now() });
+      window.WrongBook?.capture({ id: `408-${item.id}`, module: "408 真题", subject: item.subject, topic: item.topic, prompt: optionPlainText(item.question || item.questionHtml), answer: item.answer || "主观题按解析自评", analysis: item.analysis, href: `${location.pathname}?year=${item.year}&question=${encodeURIComponent(item.id)}` }, false);
       render();
     });
   }

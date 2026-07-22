@@ -254,6 +254,7 @@
     els.resultSummary.textContent = `${state.scopeLabel} · 共 ${state.questions.length} 题，答对 ${correct} 题，答错或未答 ${wrong} 题。`;
     els.breakdown.innerHTML = `<div><strong>${correct}</strong><span>答对</span></div><div><strong>${wrong}</strong><span>答错/未答</span></div><div><strong>${answered}</strong><span>已作答</span></div><div><strong>${formatDuration(Number(els.minutes.value) * 60 - state.seconds)}</strong><span>用时</span></div>`;
     els.review.innerHTML = state.questions.map((question, index) => renderReview(question, index)).join("");
+    state.questions.forEach((question, index) => window.WrongBook?.capture({ id: `408-mock-${question.id}`, module: "408 专题考试", subject: question.subject, topic: question.topic, prompt: question.prompt, options: question.options, answer: question.correct, analysis: question.analysis, href: location.pathname }, state.answers[index] === question.correct));
     saveResult({ date: Date.now(), scope: state.scopeLabel, score, total: state.questions.length, correct });
     scrollTo({ top: 0, behavior: "smooth" });
   }

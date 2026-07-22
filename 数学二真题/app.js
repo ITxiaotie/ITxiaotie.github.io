@@ -5,6 +5,7 @@ const els={year:el("yearSelect"),kind:el("kindSelect"),subject:el("subjectSelect
 const key=id=>`math2-study:${id}`;
 function record(id){try{return JSON.parse(localStorage.getItem(key(id))||"null")}catch{return null}}
 function save(id,value){localStorage.setItem(key(id),JSON.stringify(value))}
+function syncWrong(item,wrong){window.WrongBook?.capture({id:`math2-${item.id}`,module:"数学二真题",subject:item.subject,topic:item.topic,prompt:item.question,answer:item.answer,analysis:item.guide?.method||"按详细讲解重新演算。",href:`${location.pathname}?year=${item.year}&question=${encodeURIComponent(item.id)}`},!wrong)}
 function exam(){return availableExams.find(x=>x.year===Number(state.year))}
 function escapeHtml(value){return String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;")}
 function mathText(value){return escapeHtml(value).replaceAll("\n","<br>")}
@@ -32,8 +33,8 @@ function card(item){const rec=record(item.id);const article=document.createEleme
   </section>`;
   article.querySelector('.reveal').onclick=()=>{article.querySelector('.explanation').classList.add('open');typeset(article)};
   article.querySelectorAll('[data-choice]').forEach(btn=>btn.onclick=()=>{article.querySelectorAll('[data-choice]').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected')});
-  article.querySelector('.master').onclick=()=>{save(item.id,{wrong:false,time:Date.now()});render()};
-  article.querySelector('.needs-review').onclick=()=>{save(item.id,{wrong:true,time:Date.now()});render()};
+  article.querySelector('.master').onclick=()=>{save(item.id,{wrong:false,time:Date.now()});syncWrong(item,false);render()};
+  article.querySelector('.needs-review').onclick=()=>{save(item.id,{wrong:true,time:Date.now()});syncWrong(item,true);render()};
   const stem=article.querySelector('.question');
   if(window.QuestionPaperImage?.hasComplexLayout(item.question))stem.dataset.paperLabel=`${item.year} 年第 ${item.number} 题真题题面`;
   return article;
