@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; form-action 'none'; frame-src 'none'; object-src 'none'; script-src 'self'; script-src-attr 'none'; style-src 'self'; img-src 'self' data:; font-src 'self' data:; connect-src 'none'; media-src 'none'; worker-src 'none'; manifest-src 'self'">
+  <title>408 题本在线练习</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="../security.js"></script>
+  <script src="../auth/local-session.js"></script>
+  <script src="../auth/protect.js"></script>
+  <script src="../wrongbook.js"></script>
+</head>
+<body>
+  <header>
+    <a href="../index.html">← 返回总目录</a>
+    <span>WORKBOOK PRACTICE</span>
+    <h1>408 题本在线练习</h1>
+    <p>题目可直接选择作答；公式、代码和图形以原题页为准。提交后打开原书官方答案解析页，再标记掌握或错题。</p>
+  </header>
+  <main>
+    <section class="overview" aria-label="题库统计">
+      <div><strong id="total">0</strong><span>已转换选择题</span></div>
+      <div><strong id="visible">0</strong><span>当前筛选</span></div>
+      <a href="../错题集/">全站错题集 →</a>
+    </section>
+    <section class="filters" aria-label="题目筛选">
+      <label>科目<select id="subject"></select></label>
+      <label>章节<select id="section"></select></label>
+      <label>题号/关键词<input id="search" type="search" placeholder="例如：队列、时间复杂度"></label>
+      <label class="check"><input id="wrongOnly" type="checkbox">只看待复习题</label>
+    </section>
+    <section id="list" class="questions" aria-live="polite"></section>
+    <nav class="pager" aria-label="题目翻页">
+      <button id="previous" type="button">← 上一页</button>
+      <span id="pageInfo"></span>
+      <button id="next" type="button">下一页 →</button>
+    </nav>
+  </main>
+  <template id="empty"><div class="empty">当前条件下没有找到题目。</div></template>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
